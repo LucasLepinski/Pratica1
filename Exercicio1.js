@@ -6,30 +6,33 @@ const rl = readline.createInterface({
 });
 
 function calcularMDC(a, b) {
-
-  if (b === 0) {
-    return a;
+  while (b !== 0) {
+    const temp = b;
+    b = a % b;
+    a = temp;
   }
-  return calcularMDC(b, a % b);
+  return a;
 }
 
 function calcularMMC(a, b) {
-
   return Math.abs(a * b) / calcularMDC(a, b);
 }
 
 function main() {
-  rl.question('Digite o primeiro número inteiro: ', (num1) => {
-    rl.question('Digite o segundo número inteiro: ', (num2) => {
+  rl.question('Digite o primeiro número: ', (num1) => {
+    rl.question('Digite o segundo número: ', (num2) => {
+      const a = parseInt(num1);
+      const b = parseInt(num2);
 
-      num1 = parseInt(num1);
-      num2 = parseInt(num2);
+      if (isNaN(a) || isNaN(b)) {
+        console.log('Por favor, insira números válidos.');
+      } else {
+        const mdc = calcularMDC(a, b);
+        const mmc = calcularMMC(a, b);
 
-
-      let mmc = calcularMMC(num1, num2);
-
-
-      console.log(`O MMC de ${num1} e ${num2} é: ${mmc}`);
+        console.log(`O MDC de ${a} e ${b} é: ${mdc}`);
+        console.log(`O MMC de ${a} e ${b} é: ${mmc}`);
+      }
 
       rl.close();
     });
